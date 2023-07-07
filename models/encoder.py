@@ -7,16 +7,20 @@ from typing import Tuple
 
 class ConvEncoderLayer(nn.Module):
 
-    def __init__(self, c_in: int) -> None:
+    def __init__(self, c_in: int, use_gpt_style: bool=True) -> None:
         super(ConvEncoderLayer, self).__init__()
         padding = 1 if torch.__version__ >= '1.5.0' else 2
-        self.down_conv = nn.Conv1d(
-            in_channels=c_in,
-            out_channels=c_in,
-            kernel_size=3,
-            padding=padding,
-            padding_mode='circular',
-        )
+        
+        if use_gpt_style: 
+            self.down_conv = nn.Conv1d(
+                in_channels=c_in,
+                out_channels=c_in,
+                kernel_size=3,
+                padding=padding,
+                padding_mode='circular',
+            )
+        else:
+            self.down_conv = nn.Linear(c_in, c_in)
         self.norm = nn.BatchNorm1d(c_in)
         self.activation = nn.ELU()
         self.pool = nn.MaxPool1d(kernel_size=3, stride=2, padding=1)
