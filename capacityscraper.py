@@ -1,7 +1,9 @@
+
+import csv
 import requests
 from bs4 import BeautifulSoup
 
-# Function to scrape bike share stations
+# Function to scrape bike share stations and save as CSV
 def scrape_bike_share_stations():
     # URL of the Toronto Bike Share OpenStreetMap page
     url = 'https://www.openstreetmap.org/directory/josm?query=Toronto%20Bike%20Share#map=13/43.6700/-79.3900'
@@ -17,22 +19,32 @@ def scrape_bike_share_stations():
         # Find all the station rows
         station_rows = soup.find_all('tr', class_='station-row')
 
-        # Iterate over the station rows and extract capacity information
-        for row in station_rows:
-            # Extract station name
-            station_name = row.find('td', class_='station-name').text.strip()
+        # Create a CSV file and write header row
+        with open('bike_share_stations.csv', 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(['Station', 'Capacity', 'Location', 'ID'])
 
-            # Extract station capacity
-            station_capacity = row.find('td', class_='station-capacity').text.strip()
+            # Iterate over the station rows and extract information
+            for row in station_rows:
+                # Extract station name
+                station_name = row.find('td', class_='station-name').text.strip()
 
-            # Print station name and capacity
-            print(f"Station: {station_name}")
-            print(f"Capacity: {station_capacity}")
-            print('----------------------')
+                # Extract station capacity
+                station_capacity = row.find('td', class_='station-capacity').text.strip()
 
+                # Extract station location
+                station_location = row.find('td', class_='station-location').text.strip()
+
+                # Extract station ID
+                station_id = row.find('td', class_='station-id').text.strip()
+
+                # Write station information to CSV
+                writer.writerow([station_name, station_capacity, station_location, station_id])
+
+        print('Data saved successfully.')
     else:
         print('Failed to retrieve data from OpenStreetMap.')
 
 
-# Call the function to scrape bike share stations
+# Call the function to scrape bike share stations and save as CSV
 scrape_bike_share_stations()
