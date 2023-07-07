@@ -62,3 +62,24 @@ class EncoderLayer(nn.Module):
         y = self.dropout(self.conv2(y).transpose(-1, 1))
 
         return self.norm2(x+y), attn
+
+
+class EncoderStack(nn.Module):
+    
+    def __init__(self, encoders: nn.Module, inp_lens: float) -> None:
+        super(EncoderStack, self).__init__()
+        self.encoders = nn.ModuleList(encoders)
+        self.inp_lens = inp_lens
+    
+
+    def forward(self, x, attn_mask=None):
+        x_stack = []
+        attns = []
+
+        for i_len, encoder in zip(self.inp_lens, self.encoders):
+            inp_len = x.shape[1]//(2**i_len)
+            x_s, attn = encoder(x[:, -inp_len:, :])
+            x_stack.append(x_s)
+            attns.append(attn)
+        x_stack = torch.cat(x_stack, -2)
+        return (x_stack, attns)
