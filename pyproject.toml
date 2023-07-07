@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "torontobikeproblem"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+gurobipy = "^10.0.2"
+numpy = "^1.25.0"
+pandas = "^2.0.3"
+plotly = "^5.15.0"
+ipykernel = "^6.24.0"
+nbformat = "^5.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
