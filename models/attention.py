@@ -138,3 +138,58 @@ class ProbAttention(nn.Module):
             context, values, scores_top, index, L_Q, attn_mask)
 
         return context.transpose(2, 1).contiguous(), attn
+    
+
+class AttentionLayer(nn.Module):
+
+    def __init__(
+            self, 
+            attention: nn.Module,
+            d_model: int, 
+            n_heads: int,
+            d_keys: int=None, 
+            d_values: int=None, 
+            mix: bool=False, 
+            layer_num: int=0,
+        ) -> None:
+        super(AttentionLayer, self).__init__()
+
+        d_keys = d_keys or (d_model//n_heads)
+        d_values = d_values or (d_model//n_heads)
+
+        self.inner_attention = attention
+        self.query_projection = nn.Linear(d_model, d_keys * n_heads)
+        self.key_projection = nn.Linear(d_model, d_keys * n_heads)
+        self.value_projection = nn.Linear(d_model, d_values * n_heads)
+        self.out_projection = nn.Linear(d_values * n_heads, d_model)
+        self.n_heads = n_heads
+        self.mix = mix
+        self.layer_num = layer_num
+
+    def forward(
+            self, 
+            queries: torch.Tensor, 
+            keys: torch.Tensor, 
+            values: torch.Tensor,
+            attn_mask: torch.Tensor,
+        ) -> torch.Tensor:
+
+        B, L, _ = queries.shape
+        _, S, _ = keys.shape
+        H = self.n_heads
+
+        queries = self.query_projection(queries).view(B, L, H, -1)
+        keys = self.key_projection(keys).view(B, S, H, -1)
+        values = self.value_projection(values).view(B, S, H, -1)
+
+        out, attn = self.inner_attention(
+            queries,
+            keys,
+            values,
+            attn_mask
+        )
+        if self.mix:
+            out = out.transpose(2, 1).contiguous()
+        out = out.view(B, L, -1)
+
+        return self.out_projection(out), attn
