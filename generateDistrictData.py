@@ -14,8 +14,8 @@ for row in reader:
     nearest_id = ""
     for district in reader_districts:
         distance = abs(
-            (float(row[2]) - float(district[1])) * (float(row[3]) - float(district[2])) - (
-                        float(row[2]) - float(district[1])) * (
+            (float(row[2]) - float(district[1])) * (float(row[2]) - float(district[1])) + (
+                        float(row[3]) - float(district[2])) * (
                     float(row[3]) - float(district[2])))
         if distance < nearest:
             nearest = distance
