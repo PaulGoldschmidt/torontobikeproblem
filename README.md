@@ -11,3 +11,12 @@ The goal of this project is to develop a robust model that predicts the utilizat
 Join us in revolutionizing how people move around the city! Together, we can make a positive impact on urban transportation. 🌆🌍
 
 Feel free to explore our repository and contribute to our innovative solution! 🚀
+
+## Quickstart
+TODO (:>)~
+
+## Training
+TODO (:>)~
+
+## Evaluation
+TODO (:>)~
