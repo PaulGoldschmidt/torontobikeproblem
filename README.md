@@ -12,6 +12,12 @@ Join us in revolutionizing how people move around the city! Together, we can mak
 
 Feel free to explore our repository and contribute to our innovative solution! 🚀
 
+
+## Theory
+![Update this later](assets/architecture.png)
+
+TODO (:>)~
+
 ## Quickstart
 TODO (:>)~
 
