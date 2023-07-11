@@ -8,6 +8,8 @@ Welcome to the repository for the "Bike Utilization Prediction" challenge hosted
 
 The goal of this project is to develop a robust model that predicts the utilization of bikes in the vibrant city of Toronto. By leveraging advanced data analysis and machine learning techniques, we aim to optimize urban mobility and encourage eco-friendly transportation options.
 
+We then use the forecasted demand to give recommendations on ideal positions for new rental stations using state of the art mathematical optimization techniques. 
+
 Join us in revolutionizing how people move around the city! Together, we can make a positive impact on urban transportation. 🌆🌍
 
 Feel free to explore our repository and contribute to our innovative solution! 🚀
@@ -19,6 +21,7 @@ Feel free to explore our repository and contribute to our innovative solution! �
 TODO (:>)~
 
 ## Quickstart
+- 
 - clone https://github.com/Artexety/insight for model implementation & training codes
 - **TODO:** refactor insight code & push it to this repo
 - **TODO:** forecast demand for every station, not only one! (for the presentation not important)
