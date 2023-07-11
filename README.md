@@ -19,6 +19,10 @@ Feel free to explore our repository and contribute to our innovative solution! ð
 TODO (:>)~
 
 ## Quickstart
+- clone https://github.com/Artexety/insight for model implementation & training codes
+- **TODO:** refactor insight code & push it to this repo
+- **TODO:** forecast demand for every station, not only one! (for the presentation not important)
+
 TODO (:>)~
 
 ## Training
